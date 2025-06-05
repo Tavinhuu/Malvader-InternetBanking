@@ -4,14 +4,14 @@ from datetime import datetime, timedelta
 import random
 
 app = Flask(__name__)
-app.secret_key = 'chave-secreta'
+app.secret_key = 'chave'
 
 def conectar_banco():
     return mysql.connector.connect(
         host='localhost',
         user='root',
-        password='pinguin99',
-        database='banco_malvader'
+        password='',
+        database=''
     )
 
 def registrar_auditoria(id_usuario, acao, detalhes):
