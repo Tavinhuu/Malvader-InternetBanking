@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Selecionar Cliente</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../static/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+
+  <!-- NAVBAR PRINCIPAL -->
+  <div class="navbar">
+    <img class="logo" src="../static/img/logo.png" alt="Logo do Banco Malvader" />
+
+    <div class="acessbuttons">
+      <div class="register-button">Olá, Funcionário!</div>
+      <div class="divisor">|</div>
+      <div class="register-button">
+        Painel Administrativo
+      </div>
+    </div>
+  </div>
+
+  <!-- TÍTULO E VOLTAR -->
+  <h2 class="title" style="padding-top: 10%;">Selecionar Cliente</h2>
+  <p class="subtitle">Busque clientes pelo CPF e edite seus dados.</p>
+
+  <button onclick="window.location.href='/main_funcionario'" class="backbutton">← Voltar</button>
+
+  <!-- FORMULÁRIO DE BUSCA -->
+  <form method="POST" style="margin: 30px auto; text-align: center;">
+    <input type="text" class="form-input" name="cpf" placeholder="Buscar CPF..." required 
+           style="padding: 10px; width: 250px; border-radius: 10px; border: 1px solid #ccc;">
+    <button type="submit" class="backbutton" style="margin-left: 10px;">Buscar</button>
+  </form>
+
+  <!-- RESULTADO DA BUSCA -->
+  {% if clientes %}
+  <div class="tablecontainer">
+    <table class="tableheader">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>CPF</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for cliente in clientes %}
+        <tr>
+          <td>{{ cliente.id_usuario }}</td>
+          <td>{{ cliente.nome }}</td>
+          <td>{{ cliente.cpf }}</td>
+          <td>
+            <a href="{{ url_for('alteracoes.alterar_cliente', id_cliente=cliente.id_usuario) }}"
+               style="color: #007bff; text-decoration: underline;">
+              Alterar
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% elif request.method == 'POST' %}
+  <p class="subtitle" style="color: red; text-align: center;">Nenhum cliente encontrado com esse CPF.</p>
+  {% endif %}
+
+  <!-- RODAPÉ -->
+  <div class="footer">
+    <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo do Banco Malvader" />
+    <div class="footerItems">
+      <a href="/" class="footerItem">Início</a>
+      <a href="/" class="footerItem">Atendimento</a>
+      <a href="/" class="footerItem">Segurança</a>
+      <a href="/" class="footerItem">Sobre</a>
+    </div>
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Relatório Clientes e Score</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../static/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+
+  <!-- NAVBAR PRINCIPAL -->
+  <div class="navbar">
+    <img class="logo" src="../static/img/logo.png" alt="Logo do Banco Malvader" />
+
+    <div class="acessbuttons">
+      <div class="register-button">Olá, Funcionário!</div>
+      <div class="divisor">|</div>
+      <div class="register-button">
+        Painel Administrativo
+      </div>
+    </div>
+  </div>
+
+  <!-- TÍTULO E VOLTAR -->
+  <h2 class="title" style="padding-top: 10%;">Relatório de Clientes e Score de Crédito</h2>
+  <p class="subtitle">Veja os dados dos clientes, seus saldos e scores de crédito.</p>
+
+  <button onclick="window.location.href='/reports'" class="backbutton">← Voltar</button>
+
+  <!-- TABELA COM CABEÇALHO FIXO -->
+  <div class="tablecontainer">
+    <table class="tableheader">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>CPF</th>
+          <th>Telefone</th>
+          <th>Saldo Total</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in clientes %}
+        <tr>
+          <td>{{ c.id_usuario }}</td>
+          <td>{{ c.nome }}</td>
+          <td>{{ c.cpf }}</td>
+          <td>{{ c.telefone }}</td>
+          <td>{{ c.saldo_total }}</td>
+          <td>{{ c.score_credito }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- RODAPÉ -->
+  <div class="footer">
+    <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo do Banco Malvader" />
+    <div class="footerItems">
+      <a href="/" class="footerItem">Início</a>
+      <a href="/" class="footerItem">Atendimento</a>
+      <a href="/" class="footerItem">Segurança</a>
+      <a href="/" class="footerItem">Sobre</a>
+    </div>
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Banco Malvader - Registro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+
+  <div class="navbar">
+    <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo do Banco Malvader" />
+
+    <div class="navbar-items">
+      <div class="navbar-content">Início</div>
+      <div class="navbar-content">Atendimento</div>
+      <div class="navbar-content">Segurança</div>
+      <div class="navbar-content">Sobre</div>
+    </div>
+
+    <div class="acessbuttons">
+      <a class="register-button" href="/registro" style="text-decoration: none;">Abra sua conta!</a>
+      <a class="login-button" href="/" style="text-decoration: none;">Acesse sua conta</a>
+    </div>
+  </div>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <ul class="flash-messages">
+        {% for category, message in messages %}
+          <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+  <form class="form-container" style="margin-top: 10%;"method="POST">
+    <h1 class="title">Registro de Novo Cliente</h1>
+
+    <div class="container-input">
+      <input class="form-input" type="text" name="nome" placeholder="Nome completo" required />
+      <input class="form-input" type="text" name="cpf" placeholder="CPF" required />
+      <input class="form-input" type="password" name="senha" placeholder="Senha" required />
+      <input class="form-input" type="text" name="telefone" placeholder="Telefone" required />
+      <input class="form-input" type="date" name="data_nascimento" required />
+    </div>
+
+    <input class="form-submit" type="submit" value="Registrar" />
+
+    <div class="secondary-texts">
+      <a class="underlinetext" href="/" style="text-decoration: none; color: white;">Já tenho uma conta &gt;</a>
+    </div>
+  </form>
+
+</body>
+
+</html>

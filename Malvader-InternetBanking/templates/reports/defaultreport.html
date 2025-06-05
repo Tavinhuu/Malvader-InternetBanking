@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Relatório de Inadimplência</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../static/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+
+  <!-- NAVBAR PRINCIPAL -->
+  <div class="navbar">
+    <img class="logo" src="../static/img/logo.png" alt="Logo do Banco Malvader" />
+
+    <div class="acessbuttons">
+      <div class="register-button">Olá, Funcionário!</div>
+      <div class="divisor">|</div>
+      <div class="register-button">
+        Painel Administrativo
+      </div>
+    </div>
+  </div>
+
+  <!-- TÍTULO E VOLTAR -->
+  <h2 class="title" style="padding-top: 10%;">Relatório de Inadimplência</h2>
+  <p class="subtitle">Confira as contas inadimplentes e seus respectivos saldos.</p>
+
+  <button onclick="window.location.href='/reports'" class="backbutton">← Voltar</button>
+
+  <!-- BOTÕES DE EXPORTAÇÃO -->
+  <div class="form-card-wrapper" style="gap: 1rem;">
+    <a href="/exportar-inadimplencia-excel" class="report-card" style="text-align: center; text-decoration: none;">
+      <h3 class="report-title"><i class="fas fa-file-excel"></i> Exportar Excel</h3>
+      <p class="paragraph">Clique para baixar o relatório em Excel</p>
+    </a>
+    <a href="/exportar-inadimplencia-pdf" class="report-card" style="text-align: center; text-decoration: none;">
+      <h3 class="report-title"><i class="fas fa-file-pdf"></i> Exportar PDF</h3>
+      <p class="paragraph">Clique para baixar o relatório em PDF</p>
+    </a>
+  </div>
+
+  <!-- TABELA COM CABEÇALHO FIXO -->
+  <div class="tablecontainer">
+    <table class="tableheader">
+      <thead>
+        <tr>
+          <th>ID Conta</th>
+          <th>Número</th>
+          <th>Titular</th>
+          <th>Saldo</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for linha in dados %}
+        <tr>
+          <td>{{ linha.id_conta }}</td>
+          <td>{{ linha.numero_conta }}</td>
+          <td>{{ linha.titular }}</td>
+          <td>{{ linha.saldo }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- RODAPÉ -->
+  <div class="footer">
+    <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo do Banco Malvader" />
+    <div class="footerItems">
+      <a href="/" class="footerItem">Início</a>
+      <a href="/" class="footerItem">Atendimento</a>
+      <a href="/" class="footerItem">Segurança</a>
+      <a href="/" class="footerItem">Sobre</a>
+    </div>
+  </div>
+
+</body>
+
+</html>

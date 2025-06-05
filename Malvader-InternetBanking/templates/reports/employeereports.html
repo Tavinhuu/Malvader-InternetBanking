@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Relatório Funcionários e Contas Abertas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../static/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+
+  <!-- NAVBAR PRINCIPAL -->
+  <div class="navbar">
+    <img class="logo" src="../static/img/logo.png" alt="Logo do Banco Malvader" />
+
+    <div class="acessbuttons">
+      <div class="register-button">Olá, Funcionário!</div>
+      <div class="divisor">|</div>
+      <div class="register-button">
+        Painel Administrativo
+      </div>
+    </div>
+  </div>
+
+  <!-- TÍTULO E VOLTAR -->
+  <h2 class="title" style="padding-top: 10%;">Relatório de Funcionários e Contas Abertas</h2>
+  <p class="subtitle">Veja os funcionários e o número de contas que abriram.</p>
+
+  <button onclick="window.location.href='/reports'" class="backbutton">← Voltar</button>
+
+
+  <!-- TABELA COM CABEÇALHO FIXO -->
+  <div class="tablecontainer">
+    <table class="tableheader">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>CPF</th>
+          <th>Telefone</th>
+          <th>Contas Abertas</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for f in funcionarios %}
+        <tr>
+          <td>{{ f.id_usuario }}</td>
+          <td>{{ f.nome }}</td>
+          <td>{{ f.cpf }}</td>
+          <td>{{ f.telefone }}</td>
+          <td>{{ f.contas_abertas }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- RODAPÉ -->
+  <div class="footer">
+    <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo do Banco Malvader" />
+    <div class="footerItems">
+      <a href="/" class="footerItem">Início</a>
+      <a href="/" class="footerItem">Atendimento</a>
+      <a href="/" class="footerItem">Segurança</a>
+      <a href="/" class="footerItem">Sobre</a>
+    </div>
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Banco Malvader - Encerrar Conta</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo do Banco Malvader" />
+
+    <div class="acessbuttons">
+      <div class="register-button">Olá, Funcionário!</div>
+      <div class="divisor">|</div>
+      <div class="register-button" style="display: flex; justify-content: flex-end; align-items: center; font-size: 16px;">
+        Painel Administrativo
+      </div>
+    </div>
+  </div>
+
+  <!-- Título e subtítulo -->
+  <h2 class="title" style="padding-top: 10%;">Encerrar Conta Malvader</h2>
+  <p class="subtitle">Preencha os dados abaixo para encerrar a conta com segurança.</p>
+
+  <!-- Botão voltar -->
+  <button onclick="window.location.href='/main_funcionario'" class="backbutton">← Voltar</button>
+
+  <!-- Container flex do formulário e cartão -->
+  <div class="form-card-wrapper">
+
+    <!-- FORMULÁRIO DE ENCERRAMENTO DE CONTA -->
+    <div class="form-container">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <ul>
+            {% for category, message in messages %}
+              <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+
+      <form method="POST" action="{{ url_for('encerrar_conta') }}" class="container-input">
+        <label for="id_conta" class="paragraph">ID da Conta:</label>
+        <input type="number" id="id_conta" name="id_conta" required class="form-input" />
+
+        <label for="motivo" class="paragraph">Motivo do Encerramento:</label>
+        <textarea id="motivo" name="motivo" required class="form-input"></textarea>
+
+        <label for="senha_admin" class="paragraph">Senha de Administrador:</label>
+        <input type="password" id="senha_admin" name="senha_admin" required class="form-input" />
+
+        <label for="otp" class="paragraph">OTP:</label>
+        <input type="text" id="otp" name="otp" required class="form-input" />
+
+        <input type="submit" value="Encerrar Conta" class="form-submit" />
+      </form>
+    </div>
+
+    <!-- CARTÃO INFORMATIVO -->
+    <div class="info-card">
+      <h3 class="info-title">Lembretes!</h3>
+      <p class="paragraph">Antes de encerrar uma conta, verifique:</p>
+      <p class="paragraph"><strong>ID da Conta</strong> está correto e ativo no sistema.</p>
+      <p class="paragraph">O <strong>motivo do encerramento</strong> foi informado claramente.</p>
+      <p class="paragraph">A <strong>senha do administrador</strong> e o <strong>OTP</strong> são válidos para autenticação.</p>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo do Banco Malvader" />
+    <div class="footerItems">
+      <a href="/" class="footerItem">Início</a>
+      <a href="/" class="footerItem">Atendimento</a>
+      <a href="/" class="footerItem">Segurança</a>
+      <a href="/" class="footerItem">Sobre</a>
+    </div>
+  </div>
+
+</body>
+
+</html>

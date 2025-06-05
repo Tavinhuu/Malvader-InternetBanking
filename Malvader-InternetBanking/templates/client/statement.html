@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Banco Malvader - Extrato</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo do Banco Malvader" />
+    <div class="acessbuttons">
+      <div class="register-button">Olá, {{ nome_usuario }}!</div>
+    </div>
+  </div>
+
+  <!-- Título -->
+  <h2 class="title" style="padding-top: 10%;">Extrato</h2>
+  <p class="subtitle">Filtre o período para visualizar suas transações.</p>
+
+  <!-- Botão Voltar -->
+  <button onclick="window.location.href='/main_usuario'" class="backbutton">← Voltar</button>
+
+  <!-- Formulário -->
+  <div class="form-card-wrapper" style="justify-content: center;">
+    <div class="form-container" style="max-width: 600px; width: 100%;">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <ul>
+            {% for category, message in messages %}
+              <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+
+      <form method="POST" class="container-input" style="gap: 1rem;">
+        <label for="data_inicio" class="paragraph">Data Início:</label>
+        <input type="date" id="data_inicio" name="data_inicio" required class="form-input" />
+
+        <label for="data_fim" class="paragraph">Data Fim:</label>
+        <input type="date" id="data_fim" name="data_fim" required class="form-input" />
+
+        <input type="submit" value="Filtrar" class="form-submit" />
+      </form>
+    </div>
+  </div>
+
+  <!-- Tabela -->
+
+  <div class="extrato-container">
+  <div class="extrato-header">Extrato</div>
+
+  {% for t in transacoes %}
+    <div class="extrato-item">
+      <div class="extrato-info">
+        <span class="extrato-tipo">{{ t.tipo }}</span>
+        <span class="extrato-data">{{ t.data_movimentacao.strftime('%d/%m/%Y %H:%M') }}</span>
+      </div>
+      <div class="extrato-valor {% if t.tipo == 'Depósito' %}credito{% else %}debito{% endif %}">
+        R$ {{ '%.2f'|format(t.valor) }}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo do Banco Malvader" />
+    <div class="footerItems">
+      <a href="/" class="footerItem">Início</a>
+      <a href="/" class="footerItem">Atendimento</a>
+      <a href="/" class="footerItem">Segurança</a>
+      <a href="/" class="footerItem">Sobre</a>
+    </div>
+  </div>
+
+</body>
+</html>

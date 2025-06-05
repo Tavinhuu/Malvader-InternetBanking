@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Banco Malvader - Verificação OTP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+</head>
+
+<body>
+
+  <div class="navbar">
+    <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo do Banco Malvader" />
+
+    <div class="navbar-items">
+      <div class="navbar-content">Início</div>
+      <div class="navbar-content">Atendimento</div>
+      <div class="navbar-content">Segurança</div>
+      <div class="navbar-content">Sobre</div>
+    </div>
+
+    <div class="acessbuttons">
+      <div class="register-button">Abra sua conta!</div>
+      <button class="login-button">Acesse sua conta</button>
+    </div>
+  </div>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <ul class="flash-messages">
+        {% for category, message in messages %}
+          <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+  <form class="form-container" method="POST" action="/verificar-otp">
+    <h1 class="title">Verificação de OTP</h1>
+
+    <div class="container-input">
+      <input class="form-input" type="text" name="otp" placeholder="Digite o código OTP" required autofocus />
+    </div>
+
+    <input class="form-submit" type="submit" value="Verificar" />
+  </form>
+
+</body>
+
+</html>

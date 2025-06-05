@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Alterar Cliente</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../static/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <img class="logo" src="../static/img/logo.png" alt="Logo do Banco Malvader" />
+    <div class="acessbuttons">
+      <div class="register-button">Olá, Funcionário!</div>
+      <div class="divisor">|</div>
+      <div class="register-button">Painel Administrativo</div>
+    </div>
+  </div>
+
+  <!-- TÍTULO E VOLTAR -->
+  <h2 class="title" style="padding-top: 10%;">Alterar Cliente</h2>
+  <p class="subtitle">Atualize as informações do cliente abaixo.</p>
+  <button onclick="window.location.href='/main_funcionario'" class="backbutton">← Voltar</button>
+
+  <!-- FORMULÁRIO -->
+  <div class="info-card">
+    <h3 style="color: #CAFF33;">Dados do Cliente</h3>
+    <form method="POST">
+      <div class="form-group">
+        <label for="id_cliente">ID do Cliente:</label>
+        <input type="text" id="id_cliente" name="id_cliente" value="{{ cliente.id_usuario }}" class="form-input" readonly>
+      </div>
+
+      <div class="form-group">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" value="{{ cliente.nome }}" class="form-input" required>
+      </div>
+
+      <div class="form-group">
+        <label for="telefone">Telefone:</label>
+        <input type="text" id="telefone" name="telefone" value="{{ cliente.telefone }}" class="form-input" required>
+      </div>
+
+      <div class="form-group">
+        <label for="senha_admin">Senha do Administrador:</label>
+        <input type="password" id="senha_admin" name="senha_admin" class="form-input" required>
+      </div>
+      <center>
+      <input type="submit" value="Salvar Alterações" class="backbutton">
+    </center>
+    </form>
+  </div>
+
+  <!-- RODAPÉ -->
+  <div class="footer">
+    <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo do Banco Malvader" />
+    <div class="footerItems">
+      <a href="/" class="footerItem">Início</a>
+      <a href="/" class="footerItem">Atendimento</a>
+      <a href="/" class="footerItem">Segurança</a>
+      <a href="/" class="footerItem">Sobre</a>
+    </div>
+  </div>
+
+</body>
+
+</html>

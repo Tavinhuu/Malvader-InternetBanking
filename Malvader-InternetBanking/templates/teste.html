@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Banco Malvader - Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../static/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <img class="logo" src="../static\img\logo.png" alt="Logo do Banco Malvader" />
+
+    <div class="acessbuttons">
+      <div class="register-button">Olá, Funcionário!</div>
+      <div class="divisor">|</div>
+      <div class="register-button" style="display: flex; justify-content: flex-end; align-items: center; font-size: 16px;">
+        Painel Administrativo
+      </div>
+    </div>
+  </div>
+
+ 
+   <h2 class="title" style="padding-top: 10%;">Abrir Conta Malvader</h2>
+<p class="subtitle">Bem-vindo(a)! Preencha os dados abaixo para abrir uma nova conta de forma rápida e segura.</p>
+  <!-- FORMULÁRIO DE ABERTURA DE CONTA -->
+  <!-- CONTAINER FLEX DO FORMULÁRIO E DO CARTÃO -->
+   <button onclick="window.location.href='/main_funcionario'" class="backbutton">← Voltar</button>
+<div class="form-card-wrapper">
+
+  <!-- FORMULÁRIO DE ABERTURA DE CONTA -->
+  <div class="form-container">
+    <form method="POST" action="{{ url_for('abrir_conta') }}" class="container-input">
+      <label for="tipo" class="paragraph">Tipo de Conta:</label>
+      <select name="tipo" id="tipo" required class="form-input">
+        <option value="CC">Conta Corrente</option>
+        <option value="CP">Conta Poupança</option>
+        <option value="CI">Conta Investimento</option>
+      </select>
+
+      <label for="id_cliente" class="paragraph">ID do Cliente:</label>
+      <input type="number" id="id_cliente" name="id_cliente" required placeholder="Digite o ID do cliente" class="form-input" />
+
+      <label for="saldo" class="paragraph">Saldo Inicial:</label>
+      <input type="number" step="0.01" name="saldo" id="saldo" required value="0.00" class="form-input" />
+
+      <input type="submit" value="Abrir Conta" class="form-submit" />
+  
+    </form>
+  </div>
+
+  <!-- CARTÃO INFORMATIVO -->
+  <div class="info-card">
+  <h3 class="info-title">Lembretes!</h3>
+  <p class="paragraph">Antes de abrir uma nova conta, certifique-se de que:</p>
+    <p class="paragraph"><strong>ID</strong> O cliente já possui um cadastro válido no sistema.</p>
+    <p class="paragraph">O <strong>tipo de conta</strong> selecionado é adequado às necessidades do cliente.</p>
+    <p class="paragraph">O <strong>saldo Inicial</strong> é informado corretamente.</p>
+</div>
+
+</div>
+
+  
+  <div class="footer">
+    <img class="logo" src="../static\img\logo.png" alt="Logo do Banco Malvader" />
+    <div class="footerItems">
+      <a href="/" class="footerItem">Início</a>
+      <a href="/" class="footerItem">Atendimento</a>
+      <a href="/" class="footerItem">Segurança</a>
+      <a href="/" class="footerItem">Sobre</a>
+      </div>
+  </div>
+
+</body>
+
+
+</html>

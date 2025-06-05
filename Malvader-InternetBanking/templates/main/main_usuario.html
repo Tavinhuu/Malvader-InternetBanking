@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Área do Usuário</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../static/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+
+  <!-- NAVBAR PRINCIPAL -->
+  <div class="navbar">
+    <img class="logo" src="../static/img/logo.png" alt="Logo do Banco Malvader" />
+
+    <div class="acessbuttons">
+      <div class="register-button">Olá, {{ nome }}!</div>
+      <div class="divisor">|</div>
+      <div class="register-button"
+        style="display: flex; justify-content: flex-end; align-items: center; font-size: 16px;">
+        Conta:
+        <span style="color: #999; margin-left: 8px;">{{ numeroconta }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVBAR SECUNDÁRIA -->
+  <div class="secondarynav">
+    <div class="secondarynavItems">
+      <a href="/extrato" class="secondarynavItem">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <span>Extrato</span>
+      </a>
+      <a href="/transferencia" class="secondarynavItem">
+        <i class="fa-solid fa-sack-dollar"></i>
+        <span>Transferir</span>
+      </a>
+      <a href="/deposito" class="secondarynavItem">
+        <i class="fa-solid fa-receipt"></i>
+        <span>Depositar</span>
+      </a>
+      <a href="/saque" class="secondarynavItem">
+        <i class="fa-solid fa-cash-register"></i>
+        <span>Saque</span>
+      </a>
+      <a href="/investimentos" class="secondarynavItem">
+        <i class="fa-solid fa-chart-line"></i>
+        <span>Investimentos</span>
+      </a>
+      <a href="/logout" class="secondarynavItem">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Sair</span>
+      </a>
+    </div>
+  </div>
+
+
+  <div class="form-card-wrapper" style="padding-top: 15%">
+    <!-- BLOCO ESQUERDO: Saldo, Conta e Extrato -->
+    <div class="main-card">
+      <p class="paragraph">Saldo em conta:</p>
+      <h3 class="saldo">R$ {{ saldo }}</h3>
+
+
+<div class="saldo-actions">
+  <a href="/transferencia" class="action-icon" title="Transferir">
+    <div class="icon">
+      <i class="fa-solid fa-upload"></i>
+    </div>
+   
+  </a>
+  <a href="/deposito" class="action-icon" title="Depositar">
+    <div class="icon">
+      <i class="fa-solid fa-barcode"></i>
+    </div>
+   
+  </a>
+  <a href="/saque" class="action-icon" title="Sacar">
+    <div class="icon">
+      <i class="fa-solid fa-piggy-bank"></i>
+    </div>
+
+  </a>
+  
+</div>
+
+      <div class="extrato-container">
+        <div class="extrato-header">Extrato</div>
+
+        {% for m in movimentacoes %}
+        <div class="extrato-item">
+          <div class="extrato-info">
+            <span class="extrato-tipo">{{ m.tipo }}</span>
+            <span class="extrato-data">{{ m.data_movimentacao.strftime('%d/%m/%Y %H:%M') }}</span>
+          </div>
+          <div class="extrato-valor {% if m.tipo == 'Depósito' %}credito{% else %}debito{% endif %}">
+            R$ {{ '%.2f'|format(m.valor) }}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- BLOCO DIREITO: Info Card -->
+    <div class="ad-card-column">
+      <div class="ad-card" style="background-color: #1e1e1e; color: white;">
+        <p class="title" style="font-size: 18px; margin-bottom: 11%;"><strong>Movimente seu saldo e receba
+            cashback</strong></p>
+        <div class="ad-content" style="margin-bottom: 8%;">
+          <div class="icon-circle">
+            <i class="fa-solid fa-check"></i>
+          </div>
+          <p class="paragraph"><strong style="color: white">1,5 de cashback ao comprar no crédito: </strong>Ganhe
+            dinheiro de volta nas suas compras, aqui seu saldo é seu limite</p>
+
+        </div>
+        <div class="ad-content" style="margin-bottom: 8%;">
+          <div class="icon-circle">
+            <i class="fa-solid fa-check"></i>
+          </div>
+          <p class="paragraph"><strong style="color: white">Fica pronto na hora </strong>Crie seu cartão, adicione na
+            sua carteira digital e use imediatamente!</p>
+
+        </div>
+        <div class="ad-content" style="margin-bottom: 8%;">
+          <div class="icon-circle">
+            <i class="fa-solid fa-check"></i>
+          </div>
+          <p class="paragraph"><strong style="color: white">Sem internet? Sem problema</strong>Seu cartão está
+            disponível pra uso sempre que você precisar</p>
+
+        </div>
+
+      </div>
+      
+      <div class="ad-card" style="margin-top: 3%;">
+        <div class="ad-content">
+          <div class="icon-circle">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+          </div>
+          <p><strong>Facilite seus planos futuros: </strong>guarde dinheiro na caixinha</p>
+        </div>
+      </div>
+      <div class="ad-card" style="margin-top: 3%; background-color: #1e1e1e;">
+        <div class="ad-content">
+          <div class="icon-circle">
+            <i class="fa-solid fa-vault"></i>
+          </div>
+          <p style="color: white;"><strong>Traga seus dados </strong>e aumente suas chances de crédito</p>
+        </div>
+      </div>
+    </div>
+
+    </div>
+    
+<div class="footer">
+    <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo do Banco Malvader" />
+    <div class="footerItems">
+      <a href="/" class="footerItem">Início</a>
+      <a href="/" class="footerItem">Atendimento</a>
+      <a href="/" class="footerItem">Segurança</a>
+      <a href="/" class="footerItem">Sobre</a>
+    </div>
+  </div>
+  
+
+
+
+</body>
+
+</html>

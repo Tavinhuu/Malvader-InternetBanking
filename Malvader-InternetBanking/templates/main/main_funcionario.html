@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Menu Funcionário</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../static/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+
+  <!-- NAVBAR PRINCIPAL -->
+  <div class="navbar">
+    <img class="logo" src="../static/img/logo.png" alt="Logo do Banco Malvader" />
+
+    <div class="acessbuttons">
+      <div class="register-button">Olá, Funcionário!</div>
+      <div class="divisor">|</div>
+      <div class="register-button"
+        style="display: flex; justify-content: flex-end; align-items: center; font-size: 16px;">
+        Painel Administrativo
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVBAR SECUNDÁRIA -->
+  <div class="secondarynav">
+    <div class="secondarynavItems">
+      <a href="{{ url_for('abrir_conta') }}" class="secondarynavItem">
+        <i class="fa-solid fa-sack-dollar"></i>
+        <span>Abrir Conta</span>
+      </a>
+      <a href="{{ url_for('encerrar_conta') }}" class="secondarynavItem">
+        <i class="fa-solid fa-sack-xmark"></i>
+        <span>Encerrar Conta</span>
+      </a>
+      <a href="/selecionar-cliente" class="secondarynavItem">
+        <i class="fa-solid fa-clipboard-question"></i>
+        <span>Alterar dados</span>
+      </a>
+      <a href="/reports" class="secondarynavItem">
+        <i class="fa-solid fa-file-import"></i>
+        <span>Relatórios</span>
+      </a>
+    
+    </div>
+  </div>
+
+  <h2 class="title" style="padding-top: 20%; text-align: left;">Bem vindo(a)! {{ nome_usuario }}</h2>
+  <p class="subtitle">Veja as informações mais importantes do sistema de forma rápida e fácil.</p>
+
+<div class="form-card-wrapper">
+    <div class="report-card">
+    <h3 class="report-title">Contas abertas!</h3>
+    <p class="report-paragraph">{{ total_contas }}</p>
+
+  </div>
+  <div class="report-card">
+    <h3 class="report-title">Inadimplentes</h3>
+    <p class="report-paragraph">{{ total_inadimplentes }}</p>
+
+  </div>
+  <div class="report-card">
+    <h3 class="report-title">Funcionarios ativos!</h3>
+    <p class="report-paragraph">{{ total_funcionarios }}</p>
+
+  </div>
+
+</div>
+
+
+
+<!--sdasdasdasdasdas-->
+
+<div class="form-card-wrapper">
+  <div class="form-card-wrapper">
+  <div class="main-card">
+    <h3 style="color: #CAFF33">Auditoria</h3>
+    <p class="paragraph">Painel Administrativo banco Malvader</p>
+    {% if ultimas_auditorias %}
+
+      <div class="paragraph">
+  {% for auditoria in ultimas_auditorias %}
+    <p><strong>{{ auditoria.data_hora }}:</strong> {{ auditoria.acao }} - {{ auditoria.detalhes }}</p>
+  {% endfor %}
+</div>
+    {% else %}
+      <p class="searchresul">Nenhuma auditoria registrada.</p>
+    {% endif %}
+  </div>
+
+
+
+
+
+
+  <div class="info-card">
+  <h3 style="color: #CAFF33">Busca por CPF</h3>
+  <form method="POST" action="/main_funcionario">
+    <div class="input-with-button">
+      <input type="text" name="cpf_busca" placeholder="Digite o CPF" class="form-input" required>
+      <button type="submit" class="search-button">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+  </form>
+
+  {% if resultado_busca %}
+    <div class="searchresul paragraph">
+      <p><strong>ID:</strong> {{ resultado_busca.id_usuario }}</p>
+      <p><strong>Nome:</strong> {{ resultado_busca.nome }}</p>
+    </div>
+  {% elif resultado_busca is not none %}
+    <p class="paragraph">Nenhum usuário encontrado com esse CPF.</p>
+  {% endif %}
+</div>
+
+
+
+</div>
+
+    
+
+
+  <div class="footer">
+    <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo do Banco Malvader" />
+    <div class="footerItems">
+      <a href="/" class="footerItem">Início</a>
+      <a href="/" class="footerItem">Atendimento</a>
+      <a href="/" class="footerItem">Segurança</a>
+      <a href="/" class="footerItem">Sobre</a>
+    </div>
+  </div>
+
+</body>
+</html>

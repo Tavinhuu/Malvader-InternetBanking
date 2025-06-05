@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Banco Malvader - Investimentos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+
+  <!-- NAVBAR PRINCIPAL -->
+  <div class="navbar">
+    <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo do Banco Malvader" />
+
+    <div class="acessbuttons">
+      <div class="register-button">Olá, {{ nome }}!</div>
+      <div class="divisor">|</div>
+      <div class="register-button" style="display: flex; align-items: center; font-size: 16px;">
+        Conta:
+        <span style="color: #999; margin-left: 8px;">{{ numeroconta }}</span>
+      </div>
+    </div>
+  </div>
+  <!-- Botão voltar -->
+   <div style="padding-top: 5%;"></div>
+  <button onclick="window.location.href='/main_usuario'" class="backbutton" >← Voltar</button>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <div class="form-card-wrapper">
+    <div class="main-card">
+      <p class="paragraph" style="font-size: 18px; font-weight: 600;">Investimentos (Conta Poupança)</p>
+
+      {% if saldo is not none %}
+        <div class="extrato-item" style="display: flex; justify-content: space-between;">
+          <span class="extrato-tipo">Saldo atual:</span>
+          <span class="extrato-valor credito">R$ {{ '%.2f'|format(saldo) }}</span>
+        </div>
+
+        {% if rendimento is not none %}
+        <div class="extrato-item" style="display: flex; justify-content: space-between;">
+          <span class="extrato-tipo">Rendimento estimado (1%):</span>
+          <span class="extrato-valor credito">R$ {{ '%.2f'|format(rendimento) }}</span>
+        </div>
+        {% endif %}
+      {% else %}
+        <div class="extrato-item" style="padding: 16px; color: #888;">
+          Você não possui uma conta poupança ativa (id_conta = 3).
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- RODAPÉ -->
+  <div class="footer">
+    <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo do Banco Malvader" />
+    <div class="footerItems">
+      <a href="/" class="footerItem">Início</a>
+      <a href="/" class="footerItem">Atendimento</a>
+      <a href="/" class="footerItem">Segurança</a>
+      <a href="/" class="footerItem">Sobre</a>
+    </div>
+  </div>
+
+</body>
+
+</html>

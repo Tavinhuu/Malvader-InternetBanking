@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Banco Malvader - Transferência</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo do Banco Malvader" />
+
+    <div class="acessbuttons">
+      <div class="register-button">Olá, {{ nome_usuario }}!</div>
+    </div>
+  </div>
+
+  <!-- Título e subtítulo -->
+  <h2 class="title" style="padding-top: 10%;">Realizar Transferência</h2>
+  <p class="subtitle">Preencha os dados abaixo para realizar uma transferência rápida e segura.</p>
+
+  <!-- Botão voltar -->
+  <button onclick="window.location.href='/main_usuario'" class="backbutton">← Voltar</button>
+
+  <!-- Container do formulário -->
+  <div class="form-card-wrapper" style="justify-content: center;">
+
+    <div class="form-container" style="max-width: 400px; width: 100%;">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <ul>
+            {% for category, message in messages %}
+              <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+
+      <form method="POST" action="/transferencia" class="container-input">
+        <label for="numero_destino" class="paragraph">Número da Conta Destino:</label>
+        <input type="text" id="numero_destino" name="numero_destino" required placeholder="Digite o número da conta destino" class="form-input" />
+
+        <label for="valor" class="paragraph">Valor da Transferência:</label>
+        <input type="number" id="valor" name="valor" step="0.01" min="0.01" required placeholder="Digite o valor" class="form-input" />
+
+        <input type="submit" value="Transferir" class="form-submit" />
+      </form>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo do Banco Malvader" />
+    <div class="footerItems">
+      <a href="/" class="footerItem">Início</a>
+      <a href="/" class="footerItem">Atendimento</a>
+      <a href="/" class="footerItem">Segurança</a>
+      <a href="/" class="footerItem">Sobre</a>
+    </div>
+  </div>
+
+</body>
+
+</html>

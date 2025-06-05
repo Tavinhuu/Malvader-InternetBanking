@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Menu Funcionário</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../static/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+
+  <!-- NAVBAR PRINCIPAL -->
+  <div class="navbar">
+    <img class="logo" src="../static/img/logo.png" alt="Logo do Banco Malvader" />
+
+    <div class="acessbuttons">
+      <div class="register-button">Olá, Funcionário!</div>
+      <div class="divisor">|</div>
+      <div class="register-button"
+        style="display: flex; justify-content: flex-end; align-items: center; font-size: 16px;">
+        Painel Administrativo
+      </div>
+    </div>
+  </div>
+
+
+
+  <h2 class="title" style="padding-top: 10%; ">Relatórios</h2>
+  <p class="subtitle">Selecione uma opção para gerar relatorios.</p>
+
+  <button onclick="window.location.href='/main_funcionario'" class="backbutton">← Voltar</button>
+
+  <div class="form-card-wrapper">
+    <a class="report-card" href="/relatorio-desempenho" style="text-decoration: none;">
+    <h3 class="report-title">Desempenho</h3>
+    <p class="paragraph">Clique para gerar relatorios de desempenho</p>
+
+    </a>
+  <a class="report-card" href="/relatorio-inadimplencia" style="text-decoration: none;">
+    <h3 class="report-title">Inadimplentes</h3>
+    <p class="paragraph">Clique para gerar relatorios de inadimplentes</p>
+
+    </a>
+  <a class="report-card" href="/relatorio-movimentacoes" style="text-decoration: none;">
+    <h3 class="report-title">Movimentações</h3>
+    <p class="paragraph">Clique para gerar relatorios de movimentações</p>
+
+    </a>
+
+
+</div>
+
+  <div class="form-card-wrapper">
+    <a class="report-card" href="/consultar-funcionarios" style="text-decoration: none;">
+    <h3 class="report-title">Funcionários</h3>
+    <p class="paragraph">Clique para consultar funcionarios cadastrados</p>
+
+    </a>
+  <a class="report-card" href="/consultar-clientes" style="text-decoration: none;">
+    <h3 class="report-title">Clientes</h3>
+    <p class="paragraph">Clique para consultar clientes cadastrados</p>
+
+    </a>
+  <a class="report-card" href="/consultar-contas" style="text-decoration: none;">
+    <h3 class="report-title">Contas</h3>
+    <p class="paragraph">Clique para consultar contas cadastradas</p>
+
+    </a>
+
+
+</div>
+
+    
+
+
+  <div class="footer">
+    <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo do Banco Malvader" />
+    <div class="footerItems">
+      <a href="/" class="footerItem">Início</a>
+      <a href="/" class="footerItem">Atendimento</a>
+      <a href="/" class="footerItem">Segurança</a>
+      <a href="/" class="footerItem">Sobre</a>
+    </div>
+  </div>
+
+</body>
+</html>
