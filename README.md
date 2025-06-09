@@ -1,7 +1,7 @@
 
 
 <div align="center"> 
-  <img height="100px" src="./Malvader-InternetBanking/static/img/logo.png"/>
+  <img height="100px" src="./Malvader-InternetBanking/static/img/logo_malvader.png"/>
 </div>
 
 <br>
