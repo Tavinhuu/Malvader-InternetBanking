@@ -11,12 +11,14 @@
 </p>
 
 <p align="center">
+  <img src="https://img.shields.io/badge/Python-3.13-blue?logo=python&logoColor=white" />
   <img src="https://img.shields.io/badge/plataforma-Web-blue?logo=google-chrome" />
   <img src="https://img.shields.io/badge/backend-Flask-blue?logo=python" />
   <img src="https://img.shields.io/badge/banco-MySQL-blue?logo=mysql" />
-  <img src="https://img.shields.io/badge/frontend-Jinja2-yellow?logo=jinja" />
-  <img src="https://img.shields.io/badge/projeto-Acadêmico-green" />
+  <img src="https://img.shields.io/badge/Excel_Openpyxl-Export-green?logo=microsoft-excel&logoColor=white" />
+  <img src="https://img.shields.io/badge/PDF_ReportLab-Export-red?logo=adobe-acrobat-reader&logoColor=white" />
 </p>
+
 
 ---
 
