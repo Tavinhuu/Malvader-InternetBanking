@@ -29,7 +29,6 @@ def registrar_auditoria(id_usuario, acao, detalhes):
 @app.route('/', methods=['GET', 'POST'])
 def homepage():
     if request.method == 'POST':
-    
         pass
     return render_template('index.html')
 
@@ -46,13 +45,11 @@ def registro():
             conn = conectar_banco()
             cursor = conn.cursor()
 
-            # Verifica se CPF já existe
             cursor.execute("SELECT * FROM usuario WHERE cpf = %s", (cpf,))
             if cursor.fetchone():
                 flash("CPF já registrado.", "error")
                 return redirect('/registro')
 
-            # Insere novo usuário
             cursor.execute("""
                 INSERT INTO usuario (nome, cpf, senha_hash, tipo_usuario, data_nascimento, telefone, tentativas_login)
                 VALUES (%s, %s, MD5(%s), 'CLIENTE', %s, %s, 0)
@@ -70,8 +67,6 @@ def registro():
 
     return render_template('auth/register.html')
 
-
-# LOGIN
 @app.route('/login', methods=['POST'])
 def login():
     cpf = request.form.get('cpf')
@@ -135,7 +130,6 @@ def login():
         cursor.close()
         conn.close()
 
-# VERIFICAR OTP
 @app.route('/verificar-otp')
 def verificar_otp():
     return render_template('auth/otpverify.html')
@@ -159,12 +153,11 @@ def verificar_otp_post():
             if usuario['otp_expiracao'] > datetime.now():
                 flash('Login completo com sucesso!', 'success')
                 session['usuario_logado'] = True
-                session['id_usuario'] = id_usuario  # armazenar id definitivo para uso
-                session['tipo_usuario'] = usuario['tipo_usuario']  # salvar tipo na sessão para controle
+                session['id_usuario'] = id_usuario
+                session['tipo_usuario'] = usuario['tipo_usuario']
 
                 registrar_auditoria(id_usuario, 'LOGIN_OTP', 'OTP validado')
 
-                # Redireciona para menu conforme tipo
                 if usuario['tipo_usuario'] == 'FUNCIONARIO':
                     return redirect('/main_funcionario')
                 else:
@@ -184,7 +177,6 @@ def verificar_otp_post():
         cursor.close()
         conn.close()
 
-# Rota menu principal funcionário
 @app.route('/main_funcionario', methods=['GET', 'POST'])
 def main_funcionario():
     if not session.get('usuario_logado') or session.get('tipo_usuario') != 'FUNCIONARIO':
@@ -197,11 +189,9 @@ def main_funcionario():
     conn = conectar_banco()
     cursor = conn.cursor(dictionary=True)
 
-    # Buscar nome do funcionário logado
     cursor.execute("SELECT nome FROM usuario WHERE id_usuario = %s", (id_usuario,))
     funcionario = cursor.fetchone()
 
-    # Dados do painel
     cursor.execute("SELECT COUNT(*) AS total FROM conta")
     total_contas = cursor.fetchone()['total']
 
@@ -211,7 +201,6 @@ def main_funcionario():
     cursor.execute("SELECT COUNT(*) AS total FROM usuario WHERE tipo_usuario = 'FUNCIONARIO'")
     total_funcionarios = cursor.fetchone()['total']
 
-    # Se houve envio do formulário
     if request.method == 'POST':
         cpf_digitado = request.form.get('cpf_busca')
         if cpf_digitado:
@@ -233,9 +222,6 @@ def main_funcionario():
     ultimas_auditorias=ultimas_auditorias
 )
 
-
-
-# Rota menu principal usuário comum
 @app.route('/main_usuario', methods=['GET', 'POST'])
 def main_usuario():
     id_usuario = session.get('id_usuario')
@@ -260,7 +246,6 @@ def main_usuario():
     saldo = conta['saldo']
     numero_conta = conta['numero_conta']
 
-    # Buscar últimas 5 movimentações
     cursor.execute("""
         SELECT tipo, valor, data_movimentacao
         FROM movimentacao
@@ -279,28 +264,17 @@ def main_usuario():
                            numeroconta=numero_conta,
                            movimentacoes=ultimas_movimentacoes)
 
-
-
-
-
-
-
-
-
-# LOGOUT
 @app.route('/logout')
 def logout():
     session.clear()
     flash('Você saiu da sessão.', 'success')
     return redirect('/')
 
-# GERADOR DE CONTA
 def gerar_numero_conta():
     numero = random.randint(100000, 999999)
     digito = numero % 9
     return f"{numero}-{digito}"
 
-# ABERTURA DE CONTA
 @app.route('/abrir-conta', methods=['GET', 'POST'])
 def abrir_conta():
     if not session.get('usuario_logado'):
@@ -338,7 +312,6 @@ def abrir_conta():
             conn.close()
     return render_template('accounts/openaccount.html')
 
-# ENCERRAMENTO DE CONTA
 @app.route('/encerrar-conta', methods=['GET', 'POST'])
 def encerrar_conta():
     if not session.get('usuario_logado'):
@@ -388,7 +361,6 @@ def encerrar_conta():
                 flash('Conta com saldo negativo não pode ser encerrada.', 'error')
                 return redirect('/encerrar-conta')
 
-        
             cursor.execute("""INSERT INTO historico_encerramento (id_conta, id_funcionario, motivo) VALUES (%s, %s, %s) """, (id_conta, id_funcionario, motivo))
 
             cursor.execute("UPDATE conta SET ativa = FALSE WHERE id_conta = %s", (id_conta,))
@@ -471,10 +443,6 @@ def consultar_funcionarios():
         conn.close()
 
     return render_template('reports/employeereports.html', funcionarios=funcionarios)
-
-###################################################
-
-
 
 if __name__ == '__main__':
     from changes import alteracoes_bp
