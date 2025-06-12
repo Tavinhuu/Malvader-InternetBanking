@@ -22,7 +22,6 @@ def deposito():
             conn = conectar_banco()
             cursor = conn.cursor(dictionary=True)
 
-            # Buscar conta do cliente (por exemplo, conta corrente id_conta=1)
             cursor.execute("SELECT id_conta, saldo FROM conta WHERE id_cliente = %s AND tipo = 'CC'", (id_usuario,))
             conta = cursor.fetchone()
 
@@ -60,13 +59,12 @@ def transferencia():
         return redirect('/')
 
     id_usuario = session['id_usuario']
-    nome_usuario = "Usuário"  # valor padrão caso não encontre
+    nome_usuario = "Usuário"
 
     try:
         conn = conectar_banco()
         cursor = conn.cursor(dictionary=True)
 
-        # Pega nome do usuário para mostrar no template
         cursor.execute("SELECT nome FROM usuario WHERE id_usuario = %s", (id_usuario,))
         usuario = cursor.fetchone()
         if usuario and 'nome' in usuario:
@@ -76,7 +74,6 @@ def transferencia():
             numero_destino = request.form.get('numero_destino')
             valor = float(request.form.get('valor'))
 
-            # Buscar a conta corrente do cliente (id_conta = 1 associada a ele)
             cursor.execute("SELECT id_conta, saldo FROM conta WHERE id_cliente = %s AND tipo = 'CC'", (id_usuario,))
             conta_origem = cursor.fetchone()
 
@@ -86,7 +83,6 @@ def transferencia():
                 conn.close()
                 return redirect('/transferencia')
 
-            # Conta de destino (sem filtro id_conta=1)
             cursor.execute("SELECT id_conta, saldo FROM conta WHERE numero_conta = %s", (numero_destino,))
             conta_destino = cursor.fetchone()
 
@@ -96,31 +92,26 @@ def transferencia():
                 conn.close()
                 return redirect('/transferencia')
 
-            # Converter saldos para float
             saldo_origem = float(conta_origem['saldo'])
             saldo_destino = float(conta_destino['saldo'])
 
-            # Verificar saldo suficiente
             if saldo_origem < valor:
                 flash("Saldo insuficiente.", "error")
                 cursor.close()
                 conn.close()
                 return redirect('/transferencia')
 
-            # Atualizar saldo da conta origem (subtrair valor)
             novo_saldo_origem = saldo_origem - valor
             cursor.execute("UPDATE conta SET saldo = %s WHERE id_conta = %s", (novo_saldo_origem, conta_origem['id_conta']))
 
-            # Atualizar saldo da conta destino (somar valor)
             novo_saldo_destino = saldo_destino + valor
             cursor.execute("UPDATE conta SET saldo = %s WHERE id_conta = %s", (novo_saldo_destino, conta_destino['id_conta']))
 
-            # Registrar movimentações
             cursor.execute("""INSERT INTO movimentacao (id_conta, tipo, valor) VALUES (%s, 'TRANSFERENCIA', %s)""",
-                           (conta_origem['id_conta'], -valor))  # débito na conta origem
+                           (conta_origem['id_conta'], -valor))
 
             cursor.execute("""INSERT INTO movimentacao (id_conta, tipo, valor) VALUES (%s, 'TRANSFERENCIA', %s)""",
-                           (conta_destino['id_conta'], valor))  # crédito na conta destino
+                           (conta_destino['id_conta'], valor))
 
             conn.commit()
 
@@ -145,7 +136,7 @@ def saque():
         return redirect('/')
 
     id_usuario = session['id_usuario']
-    taxa_extra = 5.00  # taxa se passou de 5 saques
+    taxa_extra = 5.00
 
     if request.method == 'POST':
         valor = float(request.form.get('valor'))
@@ -154,7 +145,6 @@ def saque():
             conn = conectar_banco()
             cursor = conn.cursor(dictionary=True)
 
-            # Buscar conta do cliente
             cursor.execute("SELECT id_conta, saldo FROM conta WHERE id_cliente = %s AND tipo = 'CC'", (id_usuario,))
             conta = cursor.fetchone()
 
@@ -165,7 +155,6 @@ def saque():
             id_conta = conta['id_conta']
             saldo = conta['saldo']
 
-            # Contar saques no mês
             cursor.execute("""
     SELECT COUNT(*) as total_saques
     FROM movimentacao
@@ -182,7 +171,6 @@ def saque():
                 flash(f"Saldo insuficiente. Valor com taxa: R$ {valor_final:.2f}", "error")
                 return redirect('/saque')
 
-            # Debita da conta
             cursor.execute("UPDATE conta SET saldo = saldo - %s WHERE id_conta = %s", (valor_final, id_conta))
             cursor.execute("""
                 INSERT INTO movimentacao (id_conta, tipo, valor)
@@ -223,7 +211,6 @@ def extrato():
         conn = conectar_banco()
         cursor = conn.cursor(dictionary=True)
 
-        # Buscar conta do cliente
         cursor.execute("SELECT id_conta FROM conta WHERE id_cliente = %s AND tipo = 'CC'", (id_usuario,))
         conta = cursor.fetchone()
         if not conta:
@@ -232,7 +219,6 @@ def extrato():
 
         id_conta = conta['id_conta']
 
-        # Verifica filtro por data
         if request.method == 'POST':
             data_inicio = request.form.get('data_inicio')
             data_fim = request.form.get('data_fim')
@@ -277,7 +263,6 @@ def investimentos():
         conn = conectar_banco()
         cursor = conn.cursor(dictionary=True)
 
-    
         cursor.execute("""
             SELECT saldo FROM conta WHERE id_cliente = %s AND tipo = 'CP'
         """, (id_usuario,))
@@ -289,7 +274,6 @@ def investimentos():
             saldo = float(conta['saldo'])
             rendimento = round(saldo * 0.01, 2)
 
-
         cursor.close()
         conn.close()
 
@@ -298,4 +282,3 @@ def investimentos():
         flash("Erro ao carregar dados de investimento.", "error")
 
     return render_template('client/investments.html', saldo=saldo, rendimento=rendimento)
-
